@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Try</title>
+</head>
+<body>
+    <h1>Assignment</h1>
+    <form id="get-data-form">
+        <input type="submit" value="Get data">
+    </form>
+    <div id="show-data-div"></div>
+
+    <script>
+        const getDataButton = document.getElementById('get-data-form');
+        getDataButton.addEventListener('submit', e => {
+            e.preventDefault();
+            fetch('/api/users')
+                .then((res)=>res.json())
+                .then(res=> {
+                    const container = document.getElementById('show-data-div');
+                    const heading = document.createElement("h1");
+                    heading.textContent = "Getting All Users";
+                    container.appendChild(heading);
+                    const ol=document.createElement('ol');
+                    container.appendChild(ol);
+                    res.forEach(user => {
+                        const li = document.createElement('li');
+                        const { name } = user;
+                        li.appendChild(document.createTextNode(name));
+                        ol.appendChild(li);
+                });
+            });
+        })
+    </script>
+</body>
+</html>
